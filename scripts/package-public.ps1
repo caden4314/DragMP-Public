@@ -54,11 +54,24 @@ function Write-ModsJson {
 $dist = Join-Path $Root "dist"
 New-Item -ItemType Directory -Force -Path $dist | Out-Null
 
+$resourceRoot = Join-Path $Root "Resources"
+$withoutBlockerResources = Join-Path $resourceRoot "DragMP-System-WithoutBlocker"
+$withBlockerResources = Join-Path $resourceRoot "DragMP-System-WithBlocker"
+New-Item -ItemType Directory -Force -Path `
+  (Join-Path $withoutBlockerResources "Client"), `
+  (Join-Path $withoutBlockerResources "Server\DragMP"), `
+  (Join-Path $withBlockerResources "Client"), `
+  (Join-Path $withBlockerResources "Server\DragMP") | Out-Null
+
 New-ZipFromFolder (Join-Path $Root "client") (Join-Path $dist "DragMP-Public.zip")
 New-ZipFromFolder (Join-Path $Root "client-funblocker") (Join-Path $dist "DragMP-Public-FunBlocker.zip")
 
 Copy-Item -LiteralPath (Join-Path $dist "DragMP-Public.zip") -Destination (Join-Path $Root "local-server\Resources\Client\DragMP.zip") -Force
 Copy-Item -LiteralPath (Join-Path $dist "DragMP-Public-FunBlocker.zip") -Destination (Join-Path $Root "local-server-funblocker\Resources\Client\DragMP.zip") -Force
+Copy-Item -LiteralPath (Join-Path $dist "DragMP-Public.zip") -Destination (Join-Path $withoutBlockerResources "Client\DragMP.zip") -Force
+Copy-Item -LiteralPath (Join-Path $dist "DragMP-Public-FunBlocker.zip") -Destination (Join-Path $withBlockerResources "Client\DragMP.zip") -Force
+Copy-Item -LiteralPath (Join-Path $Root "server\Resources\Server\DragMP\main.lua") -Destination (Join-Path $withoutBlockerResources "Server\DragMP\main.lua") -Force
+Copy-Item -LiteralPath (Join-Path $Root "server\Resources\Server\DragMP\main.lua") -Destination (Join-Path $withBlockerResources "Server\DragMP\main.lua") -Force
 
 Write-ModsJson (Join-Path $Root "local-server\Resources\Client\DragMP.zip") (Join-Path $Root "local-server\Resources\Client\mods.json")
 Write-ModsJson (Join-Path $Root "local-server-funblocker\Resources\Client\DragMP.zip") (Join-Path $Root "local-server-funblocker\Resources\Client\mods.json")
