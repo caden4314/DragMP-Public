@@ -1,47 +1,96 @@
-# DragMP Public
+# DragMP
 
-Public DragMP package split from the private/local development system.
+DragMP adds a multiplayer drag racing system to BeamMP on Hirochi Raceway. It is built for server owners who want a ready-to-run drag strip with working staging lights, countdown tree, timing, slips, boards, winner lights, and optional night lighting.
 
-## Included
+This repository includes two deployable BeamMP resource packages:
 
-- Hirochi Raceway drag race server logic.
-- Staging, deep staging, red lights, pro tree, and sportsman tree.
+- `DragMP-System-WithoutBlocker`: recommended for most public servers.
+- `DragMP-System-WithBlocker`: same system, but the client blocks BeamNG fun-stuff actions like boom, fling, tire break, and boost.
+
+## Features
+
+- Multiplayer drag racing on Hirochi Raceway's main drag strip.
+- Solo runs and two-lane races.
+- Stock-style pre-stage, stage, and deep-stage behavior.
+- Red light detection for jumping before green.
+- Pro tree and sportsman tree modes.
 - 1/8 mile and 1/4 mile race modes.
+- Reaction time, ET, ET without reaction time, split times, and MPH.
 - Stock BeamNG timeslip integration.
-- DragMP race screen/GPS part.
-- Timeboards, winner lights, tree test commands, and Hirochi lighting.
+- Timeboards with ET and MPH.
+- Winner lights and tree/winner light testing.
+- Added Hirochi drag strip lighting with synced `/drag lights` control.
+- Optional DragMP race screen/GPS part for in-car timing display.
 
-## Removed From Public Build
+## Which Package Should I Use?
 
-- Archive server UDP upload.
-- Run/control-log upload handling.
-- EnvSync and `/env` commands.
-- Persistent vehicle system.
-- Private SR drag electronics/controllers and compatibility shims.
-- Local ballast experiments.
+Use `DragMP-System-WithoutBlocker` if you trust your server rules or already moderate fun-stuff abuse.
 
-## Client Variants
+Use `DragMP-System-WithBlocker` if you want the DragMP client to block common fun-stuff actions during play. This helps keep public drag sessions cleaner, but it is more opinionated because it changes client input/action behavior.
 
-- `dist/DragMP-Public.zip`: normal public client.
-- `dist/DragMP-Public-FunBlocker.zip`: same client with the fun-stuff action blocker enabled.
+Only install one DragMP package on a server at a time.
 
-Only run one client variant as `DragMP.zip` on a BeamMP server at a time.
+## Install
 
-## Built Resource Folders
+1. Download one release asset:
+   - `DragMP-System-WithoutBlocker.zip`
+   - `DragMP-System-WithBlocker.zip`
+2. Extract it.
+3. Copy the extracted `Client` and `Server` folders into your BeamMP server `Resources` folder.
+4. Start or restart the BeamMP server.
+5. Join Hirochi Raceway and run `/drag help`.
 
-- `Resources/DragMP-System-WithoutBlocker`: deploy-ready BeamMP resource folder using the normal public client.
-- `Resources/DragMP-System-WithBlocker`: deploy-ready BeamMP resource folder using the fun-stuff-blocker client.
+If your server uses a custom resource folder name, either copy the package contents into that folder or set `ResourceFolder` in `ServerConfig.toml` to the extracted package folder.
 
-Each folder contains:
+## Commands
+
+- `/dj`: quick join.
+- `/drag join`: join the next open lane.
+- `/drag leave`: leave the current race.
+- `/drag 1/8`: set the race distance to 1/8 mile.
+- `/drag 1/4`: set the race distance to 1/4 mile.
+- `/drag pro`: select pro tree auto-start.
+- `/drag sport`: select sportsman tree auto-start.
+- `/drag start [pro|sport]`: manually start the tree.
+- `/drag status`: show race state and racers.
+- `/drag stage`: show staging debug for your lane.
+- `/drag reset`: reset the race.
+- `/drag test [1|2]`: test tree, board, and winner lights.
+- `/drag lights auto|on|off|reload`: control added drag strip lighting.
+
+## Included Files
+
+Each release package contains:
 
 - `Client/DragMP.zip`
 - `Server/DragMP/main.lua`
 
-Copy one of those folders into a BeamMP server and point `ResourceFolder` at it, or copy its `Client` and `Server` folders into an existing BeamMP `Resources` folder.
+The repository also includes source folders and packaging scripts for maintainers. Server owners should use the release downloads unless they are modifying the system.
 
-## Local Test Servers
+## Not Included
 
-- `local-server`: normal public client on port `30815`.
-- `local-server-funblocker`: fun-blocker client on port `30816`.
+This public build intentionally does not include:
 
-Copy a real BeamMP auth key into the matching `ServerConfig.toml` before public hosting.
+- Archive server upload.
+- Control-log upload handling.
+- EnvSync or `/env` commands.
+- Persistent vehicle storage.
+- Private SR electronics/controllers.
+- Private mod compatibility shims.
+- Ballast experiments.
+
+Those features were kept out so public server owners can install DragMP without external backend services or private dependencies.
+
+## Requirements
+
+- BeamMP Server.
+- BeamNG.drive clients with BeamMP.
+- Hirochi Raceway as the server map: `/levels/hirochi_raceway/info.json`.
+
+## Maintainers
+
+Run this from the repo root to rebuild both client variants and deployable resource folders:
+
+```powershell
+.\scripts\package-public.ps1
+```

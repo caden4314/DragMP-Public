@@ -1,4 +1,5 @@
 dist/
+release-assets/
 local-server/BeamMP-Server.exe
 local-server/Server*.log
 local-server/.Threads.log
