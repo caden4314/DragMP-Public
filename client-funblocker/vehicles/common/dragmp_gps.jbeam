@@ -1,0 +1,85 @@
+{
+"dragmp_gps": {
+    "information":{
+        "authors":"DragMP",
+        "name":"DragMP Race Screen",
+        "value":250,
+    },
+    "slotType" : "gps",
+    "controller": [
+        ["fileName"],
+        ["dragmpNavScreen", {
+            "name":"dragmpNavScreen",
+            "screenMaterialName":"@dragmp_nav_screen",
+            "htmlFilePath":"local://local/vehicles/common/dragmp_nav/dragmp_nav_screen.html",
+            "textureWidth":512,
+            "textureHeight":256,
+            "textureFPS":20
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["suctionmount", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+         ["gpsholder", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+         ["gps", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "glowMap":{
+        "screen_gps":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"dragmp_nav_screen","on_intense":"dragmp_nav_screen"},
+    },
+},
+"dragmp_gps_alt": {
+    "information":{
+        "authors":"DragMP",
+        "name":"DragMP Race Screen",
+        "value":250,
+    },
+    "slotType" : "gps_alt",
+    "controller": [
+        ["fileName"],
+        ["dragmpNavScreen", {
+            "name":"dragmpNavScreen",
+            "screenMaterialName":"@dragmp_nav_screen",
+            "htmlFilePath":"local://local/vehicles/common/dragmp_nav/dragmp_nav_screen.html",
+            "textureWidth":512,
+            "textureHeight":256,
+            "textureFPS":20
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["suctionmount_alt", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+         ["gpsholder", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+         ["gps", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "glowMap":{
+        "screen_gps":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"dragmp_nav_screen","on_intense":"dragmp_nav_screen"},
+    },
+},
+"dragmp_gps_altb": {
+    "information":{
+        "authors":"DragMP",
+        "name":"DragMP Race Screen",
+        "value":250,
+    },
+    "slotType" : "gps_altb",
+    "controller": [
+        ["fileName"],
+        ["dragmpNavScreen", {
+            "name":"dragmpNavScreen",
+            "screenMaterialName":"@dragmp_nav_screen",
+            "htmlFilePath":"local://local/vehicles/common/dragmp_nav/dragmp_nav_screen.html",
+            "textureWidth":512,
+            "textureHeight":256,
+            "textureFPS":20
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["gpsholder", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+         ["gps", ["gps"], [],{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "glowMap":{
+        "screen_gps":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"dragmp_nav_screen","on_intense":"dragmp_nav_screen"},
+    },
+},
+}
