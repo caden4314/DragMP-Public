@@ -42,6 +42,10 @@ Only install one DragMP package on a server at a time.
 
 If your server uses a custom resource folder name, either copy the package contents into that folder or set `ResourceFolder` in `ServerConfig.toml` to the extracted package folder.
 
+## Known Bugs
+
+- Some players may see a short lag spike when they finish a run. This happens because DragMP sends the final run data to the server so the race state, timeslip, boards, and other racers stay synced.
+
 ## Commands
 
 - `/dj`: quick join.
