@@ -22,6 +22,10 @@ This repository includes two deployable BeamMP resource packages:
 - Added Hirochi drag strip lighting with synced `/drag lights` control.
 - Optional DragMP race screen/GPS part for in-car timing display.
 
+## Known Bugs
+
+- Some players may see a short lag spike when they finish a run. This happens because DragMP sends the final run data to the server so the race state, timeslip, boards, and other racers stay synced.
+
 ## Which Package Should I Use?
 
 Use `DragMP-System-WithoutBlocker` if you trust your server rules or already moderate fun-stuff abuse.
@@ -41,10 +45,6 @@ Only install one DragMP package on a server at a time.
 5. Join Hirochi Raceway and run `/drag help`.
 
 If your server uses a custom resource folder name, either copy the package contents into that folder or set `ResourceFolder` in `ServerConfig.toml` to the extracted package folder.
-
-## Known Bugs
-
-- Some players may see a short lag spike when they finish a run. This happens because DragMP sends the final run data to the server so the race state, timeslip, boards, and other racers stay synced.
 
 ## Commands
 
