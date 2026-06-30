@@ -79,6 +79,8 @@ This public build intentionally does not include:
 
 Those features were kept out so public server owners can install DragMP without external backend services or private dependencies.
 
+If you want to request access to any of the excluded features, contact me in the Scenic Route Discord at `@MYNAMEISJEFF482`, or contact me through GitHub.
+
 ## Requirements
 
 - BeamMP Server.
