@@ -58,14 +58,12 @@ If your server uses a custom resource folder name, either copy the package conte
 - `/drag test [1|2]`: test tree, board, and winner lights.
 - `/drag lights auto|on|off|reload`: control added drag strip lighting.
 
-## Included Files
+## Package Contents
 
-Each release package contains:
+Each package contains:
 
 - `Client/DragMP.zip`
 - `Server/DragMP/main.lua`
-
-The repository also includes source folders and packaging scripts for maintainers. Server owners should use the release downloads unless they are modifying the system.
 
 ## Not Included
 
@@ -86,11 +84,3 @@ Those features were kept out so public server owners can install DragMP without 
 - BeamMP Server.
 - BeamNG.drive clients with BeamMP.
 - Hirochi Raceway as the server map: `/levels/hirochi_raceway/info.json`.
-
-## Maintainers
-
-Run this from the repo root to rebuild both client variants and deployable resource folders:
-
-```powershell
-.\scripts\package-public.ps1
-```
