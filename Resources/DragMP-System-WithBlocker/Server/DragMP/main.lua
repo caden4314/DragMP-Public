@@ -395,7 +395,15 @@ local function stagingSnapshot()
     })
   end
 
-  return { state = race.state, lanes = lanes }
+  local distance = selectedRaceDistance()
+  return {
+    state = race.state,
+    raceDistanceMode = track.raceDistanceMode,
+    trackKey = distance.key,
+    trackLabel = distance.label,
+    trackLengthMeters = distance.meters,
+    lanes = lanes
+  }
 end
 
 local function broadcastStaging()
@@ -657,10 +665,12 @@ local function recordSplit(racer, split, elapsed, splitMph)
     return
   end
 
+  local et = racer.reactionTime and math.max(0, elapsed - racer.reactionTime) or elapsed
   racer.splits[split.key] = {
-    time = elapsed,
+    time = et,
+    combinedTime = elapsed,
     mph = splitMph,
-    etWithoutRt = racer.reactionTime and math.max(0, elapsed - racer.reactionTime) or nil
+    etWithoutRt = et
   }
 
   sendClient(-1, CLIENT_EVENTS.SplitTime, {
@@ -668,7 +678,8 @@ local function recordSplit(racer, split, elapsed, splitMph)
     name = racer.name,
     key = split.key,
     label = split.label,
-    time = elapsed,
+    time = et,
+    combinedTime = elapsed,
     etWithoutRt = racer.splits[split.key].etWithoutRt,
     mph = splitMph
   })
@@ -701,6 +712,7 @@ local function buildRunSummary(racer)
       meters = split.meters,
       available = split.meters <= availableLength,
       time = recorded and recorded.time or nil,
+      combinedTime = recorded and recorded.combinedTime or nil,
       etWithoutRt = recorded and recorded.etWithoutRt or nil,
       mph = recorded and recorded.mph or nil
     })
@@ -714,6 +726,9 @@ local function buildRunSummary(racer)
     trackLabel = trackLabel,
     trackLengthMeters = length,
     finishTime = racer.finishTime,
+    combinedTime = racer.finishTime,
+    finishEt = racer.finishEt,
+    finishMph = racer.finishMph,
     jumped = racer.jumped or false,
     disqualified = racer.disqualified or false,
     disqualificationReason = racer.disqualificationReason,
@@ -764,6 +779,8 @@ end
 local function finishRacer(racer, elapsed, finishMph)
   racer.finished = true
   racer.finishTime = elapsed
+  racer.combinedTime = elapsed
+  racer.finishEt = racer.reactionTime and math.max(0, elapsed - racer.reactionTime) or elapsed
   racer.finishMph = finishMph
 
   if not racer.jumped and not racer.disqualified and (not race.winner or elapsed < race.winner.finishTime) then
@@ -781,13 +798,17 @@ local function finishRacer(racer, elapsed, finishMph)
   sendClient(-1, CLIENT_EVENTS.LaneResult, {
     laneId = racer.lane.id,
     name = racer.name,
-    time = elapsed,
+    time = racer.finishEt,
+    combinedTime = elapsed,
     mph = finishMph,
+    raceDistanceMode = track.raceDistanceMode,
+    trackKey = selectedRaceDistance().key,
+    trackLabel = selectedRaceDistance().label,
     jumped = racer.jumped or false,
     disqualified = racer.disqualified or false,
     reason = racer.disqualificationReason
   })
-  broadcastStatus(string.format("%s finished in %.3fs at %.2f MPH.", racer.name, elapsed, finishMph))
+  broadcastStatus(string.format("%s finished in %.3fs at %.2f MPH.", racer.name, racer.finishEt, finishMph))
 end
 
 local function finishRaceIfDone()
