@@ -2,10 +2,11 @@
 
 DragMP adds a multiplayer drag racing system to BeamMP on Hirochi Raceway. It is built for server owners who want a ready-to-run drag strip with working staging lights, countdown tree, timing, slips, boards, winner lights, and optional night lighting.
 
-This repository includes two deployable BeamMP resource packages:
+This repository publishes two client variants plus one shared server resource:
 
-- `DragMP-System-WithoutBlocker`: recommended for most public servers.
-- `DragMP-System-WithBlocker`: same system, but the client blocks BeamNG fun-stuff actions like boom, fling, tire break, and boost.
+- `DragMP-Public-without-blocker-Client.zip`: recommended for most public servers.
+- `DragMP-Public-with-blocker-Client.zip`: blocks BeamNG fun-stuff actions like boom, fling, tire break, and boost.
+- `DragMP-Public-Server.zip`: shared server-authoritative timing and race control.
 
 ## Features
 
@@ -36,13 +37,11 @@ Only install one DragMP package on a server at a time.
 
 ## Install
 
-1. Download one release asset:
-   - `DragMP-System-WithoutBlocker.zip`
-   - `DragMP-System-WithBlocker.zip`
-2. Extract it.
-3. Copy the extracted `Client` and `Server` folders into your BeamMP server `Resources` folder.
+1. Download `DragMP-Public-Server.zip` and one client variant.
+2. Extract the server ZIP into your BeamMP server `Resources` folder.
+3. Put the selected client ZIP in `Resources/Client` and name it `DragMP.zip`.
 4. Start or restart the BeamMP server.
-5. Join Hirochi Raceway and run `/drag help`.
+5. Join a supported drag-strip map and run `/drag help`.
 
 If your server uses a custom resource folder name, either copy the package contents into that folder or set `ResourceFolder` in `ServerConfig.toml` to the extracted package folder.
 
@@ -89,4 +88,14 @@ If you want to request access to any of the excluded features, contact me in the
 
 - BeamMP Server.
 - BeamNG.drive clients with BeamMP.
-- Hirochi Raceway as the server map: `/levels/hirochi_raceway/info.json`.
+- Hirochi Raceway, or a map that provides a standard BeamNG two-lane `*.strip.json` descriptor.
+
+## Timing Authority
+
+Race state, server-observed vehicle positions, reaction time, finish crossing, elapsed time, and winner selection are evaluated by the BeamMP server. Client staging telemetry improves beam precision but is checked against server geometry and freshness limits. The winner is selected by combined elapsed time; the timing slip also exposes ET without reaction time.
+
+## Automatic Map Support
+
+Hirochi Raceway remains the built-in profile. DragMP also discovers BeamNG stock drag-strip descriptors mounted at `/levels/<level>/dragstrips/*.strip.json`. Custom maps that use the same stock schema can therefore work without hard-coded coordinates.
+
+The server requires exactly two lanes with `spawn`, `stage`, and `endLine` waypoints and rejects map mismatches, invalid values, implausible lengths, and disagreeing lane geometry.

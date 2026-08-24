@@ -1,0 +1,34 @@
+{
+  "dragmp_nav_screen": {
+    "name": "dragmp_nav_screen",
+    "mapTo": "dragmp_nav_screen",
+    "class": "Material",
+    "Stages": [
+      {
+        "baseColorFactor": [
+          0.05,
+          0.05,
+          0.05,
+          1
+        ],
+        "emissiveFactor": [
+          1,
+          1,
+          1
+        ],
+        "emissiveMap": "@dragmp_nav_screen",
+        "metallicFactor": 0.2,
+        "roughnessFactor": 0.2
+      },
+      {},
+      {},
+      {}
+    ],
+    "activeLayers": 1,
+    "dynamicCubemap": true,
+    "emissive": true,
+    "glow": true,
+    "translucent": false,
+    "version": 1.5
+  }
+}
