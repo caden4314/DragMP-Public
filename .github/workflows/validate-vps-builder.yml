@@ -29,3 +29,10 @@ jobs:
           python3 -m compileall -q scripts
       - name: Run SHA-256 release idempotency and safety checks
         run: python3 -m unittest discover -v -s tests -p 'test_*.py'
+
+      - name: Validate live-tag package parity without publishing
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/package.py
+          python3 scripts/check_existing_release.py
