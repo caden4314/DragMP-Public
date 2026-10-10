@@ -28,21 +28,8 @@ trap 'rm -f -- "$askpass" "$release_response"' EXIT
 
 verify_release_assets() {
   local response_file="$1"
-  python3 - "$source_dir/build" "$response_file" "${asset_names[@]}" <<'PY'
-import hashlib, json, pathlib, sys
-build_dir = pathlib.Path(sys.argv[1])
-with open(sys.argv[2], encoding="utf-8") as stream:
-    release = json.load(stream)
-assets = {asset.get("name"): asset for asset in release.get("assets", [])}
-for name in sys.argv[3:]:
-    item = assets.get(name)
-    if not item or item.get("state") != "uploaded":
-        raise SystemExit("missing or incomplete released asset: " + name)
-    digest = "sha256:" + hashlib.sha256((build_dir / name).read_bytes()).hexdigest()
-    if item.get("digest") != digest:
-        raise SystemExit("published asset digest mismatch: " + name)
-print("[DragMP Builder] Verified published artifact SHA-256 digests.")
-PY
+  python3 "$source_dir/scripts/verify_release_assets.py" \
+    "$source_dir/build" "$response_file" "${asset_names[@]}"
 }
 
 # Package before checking whether an existing tag already has valid assets.
