@@ -23,6 +23,13 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reject source changes that reuse a published VERSION
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+        run: python3 scripts/guard_release_version.py
       - name: Check shell syntax and Python dependencies
         run: |
           bash -n deploy/vps-builder/*.sh
