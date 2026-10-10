@@ -1,0 +1,31 @@
+name: Validate DragMP VPS builder
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'deploy/vps-builder/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/validate-vps-builder.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'deploy/vps-builder/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/validate-vps-builder.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  builder-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check shell syntax and Python dependencies
+        run: |
+          bash -n deploy/vps-builder/*.sh
+          python3 -m compileall -q scripts
+      - name: Run SHA-256 release idempotency and safety checks
+        run: python3 -m unittest discover -v -s tests -p 'test_*.py'
